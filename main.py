@@ -4,6 +4,7 @@ import time
 from account import *
 import random
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Bird(object):
@@ -41,8 +42,6 @@ class Bird(object):
 
         self.driver.get(self.target)
 
-
-
     def bio(self):
         while True:
             try:
@@ -70,32 +69,67 @@ class Bird(object):
         return f
     
     def recent(self):
-        while True:
-            #This will loop until it gets first post
-            try:
-                f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div')
-                break
-            except:
-                time.sleep(1)
-                continue
-        
-        f.click()
+        target = Bird.__checkpinned(self.driver)
         time.sleep(1)
+        f = self.driver.find_element(By.XPATH, target+'/div/div[1]/div/div')
+                                                #//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div
 
-        def find_id(): #Finds the id for xpath
-            mainframe = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/section/div/div/div[1]/div/div/article/div/div/div[3]/div[1]/div')
-            x = mainframe.find_elements(By.XPATH, '//span[text()]')
-            y = x[9].find_element(By.XPATH, '..')
+        f.click()
+        print("WE CLICKED!")
+
+        time.sleep(2)
+
+        def find_id(): #This searches for the ID. it turns out that there are seperate ids for seperate things
+            mainframe = Bird.__waitforelement(self.driver, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/section/div/div/div[1]/div/div/article/div/div/div[3]')
+            x = mainframe
+            while True:
+                x = x.find_element(By.XPATH, './/*')
+                print(x.get_attribute('id'))
+                if "id__" in x.get_attribute('id'):
+                    return x.get_attribute('id')
 
         # Get recent ID
-        xpath_id = find_id()
-        status_id = self.driver.current_url.split("/")[-1]
-        resposts = self.driver.find_element(By.XPATH, 
-                                            '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/section/div/div/div[1]/div/div/article/div/div/div[3]/div[5]/div[2]/a/div/span/span/span').text
+        id = find_id()
 
+        result_string = ''
+
+        for elm in self.driver.find_elements(By.XPATH, '//*[@id="'+id+'"]'):
+            if elm.text:
+                result_string += elm.text+ " "
+        
+        print(result_string)
+
+
+        status_id = self.driver.current_url.split("/")[-1]
+
+        while True: True
+        #resposts = self.driver.find_element(By.XPATH, '//*[@id="'+id+'"]/div[2]/div/div/div[2]/span/span/span').text
+#//*[@id="id__ux238ka04am"]/div[2]/div/div/div[2]/span/span/span
 
         return {"twitter_post_id":status_id, "resposts":resposts}
+    
+    def __checkpinned(driver):
+        while True:
+            try:
+                mainframe = driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div')
+                break
+            except:
+                continue
 
+        x = mainframe.find_elements(By.XPATH, '//span[text()]')
+        for y in x:
+            if "Pinn" in y.text:
+                return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[2]/div/div/article/div'
+        
+        return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div'
+    
+    def __waitforelement(driver, target):
+        while True:
+            try:
+                mainframe = driver.find_element(By.XPATH, target)
+                return mainframe
+            except:
+                continue
 
 
 
@@ -106,4 +140,6 @@ if __name__ == "__main__":
 
     bird.login()
 
-    print(bird.bio())
+    time.sleep(1)
+
+    bird.recent()
