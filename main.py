@@ -23,6 +23,10 @@ class Bird(object):
     def link(self):
         f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[4]/div/a/span').text
         return f
+    
+    def location(self):
+        f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[4]/div/span[1]/span/span').text
+        return f
 
 if __name__ == "__main__":
     site_url = 'https://twitter.com/Minecraft'
@@ -33,3 +37,4 @@ if __name__ == "__main__":
     print(bird.following())
     print(bird.followers())
     print(bird.link())
+    print(bird.location())
