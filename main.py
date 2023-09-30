@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 from account import *
+import random
+from selenium.webdriver.common.keys import Keys
 
 
 class Bird(object):
@@ -9,7 +11,6 @@ class Bird(object):
     def __init__(self, target:str):
         self.target = target
         self.driver = webdriver.Chrome()
-        self.driver.get(self.target)
 
     #Login System
     def login(self):
@@ -17,16 +18,24 @@ class Bird(object):
         print("Logging in...")
         self.driver.get("https://twitter.com/i/flow/login")
 
-        time.sleep(2) #Sleeping so it can let page refresh and open
+        time.sleep(2 + random.uniform(0, 1)) #Sleeping so it can let page refresh and open
         #Username input
+        time.sleep(random.uniform(0, 1))
         textbox = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input')
-        textbox.send_keys(username)
-        self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]').click()
-        time.sleep(1)
+        #textbox.send_keys(username)
+        for letter in username:
+            textbox.send_keys(letter)
+        textbox.send_keys(Keys.ENTER)
+
+        #self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]').click()
+        time.sleep(1 + random.uniform(0, 1))
         #Password input
         textbox = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
-        textbox.send_keys(password)
-        self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div').click()
+        #textbox.send_keys(password)
+        for letter in password:
+            textbox.send_keys(letter)
+        textbox.send_keys(Keys.ENTER)
+        time.sleep(1 + random.uniform(0, 1))
 
         print("Logged in!")
 
@@ -98,4 +107,3 @@ if __name__ == "__main__":
     bird.login()
 
     print(bird.bio())
-    
