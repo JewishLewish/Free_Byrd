@@ -63,7 +63,6 @@ class Bird(object):
     
     def recent(self):
         target = Bird.__checkpinned(self.driver)
-        time.sleep(1)
         f = self.driver.find_element(By.XPATH, target+'/div/div[1]/div/div')
         f.click()
 
