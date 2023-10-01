@@ -17,22 +17,19 @@ class Bird(object):
     def login(self):
 
         print("Logging in...")
-        self.driver.get("https://twitter.com/i/flow/login")
+        self.driver.get("https://twitter.com/i/flow/login") #Login Page
 
-        time.sleep(2 + random.uniform(0, 1)) #Sleeping so it can let page refresh and open
+        time.sleep(2 + random.uniform(0, 1)) #Sleeping so it can let page refresh and open / make twitter think we user
         #Username input
         time.sleep(random.uniform(0, 1))
         textbox = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input')
-        #textbox.send_keys(username)
         for letter in username:
             textbox.send_keys(letter)
         textbox.send_keys(Keys.ENTER)
 
-        #self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]').click()
         time.sleep(1 + random.uniform(0, 1))
         #Password input
         textbox = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
-        #textbox.send_keys(password)
         for letter in password:
             textbox.send_keys(letter)
         textbox.send_keys(Keys.ENTER)
@@ -49,7 +46,6 @@ class Bird(object):
                 return bio
             except:
                 continue
-        return "Funny."
 
     
     def following(self):
@@ -68,16 +64,13 @@ class Bird(object):
         f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[4]/div/span[1]/span/span').text
         return f
     
+    
     def recent(self):
         target = Bird.__checkpinned(self.driver)
         time.sleep(1)
         f = self.driver.find_element(By.XPATH, target+'/div/div[1]/div/div')
-                                                #//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div
-
         f.click()
-        print("WE CLICKED!")
 
-        time.sleep(2)
 
         def find_id(): #This searches for the ID. it turns out that there are seperate ids for seperate things
             mainframe = Bird.__waitforelement(self.driver, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/section/div/div/div[1]/div/div/article/div/div/div[3]')
@@ -96,17 +89,12 @@ class Bird(object):
         for elm in self.driver.find_elements(By.XPATH, '//*[@id="'+id+'"]'):
             if elm.text:
                 result_string += elm.text+ " "
-        
-        print(result_string)
+
 
 
         status_id = self.driver.current_url.split("/")[-1]
 
-        while True: True
-        #resposts = self.driver.find_element(By.XPATH, '//*[@id="'+id+'"]/div[2]/div/div/div[2]/span/span/span').text
-#//*[@id="id__ux238ka04am"]/div[2]/div/div/div[2]/span/span/span
-
-        return {"twitter_post_id":status_id, "resposts":resposts}
+        return {"twitter_post_id":status_id, "twitter_link":self.target+"/status/1708142894895571418", "content":result_string}
     
     def __checkpinned(driver):
         while True:
@@ -142,4 +130,4 @@ if __name__ == "__main__":
 
     time.sleep(1)
 
-    bird.recent()
+    print(bird.recent())
