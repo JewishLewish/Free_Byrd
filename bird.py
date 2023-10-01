@@ -89,7 +89,7 @@ class Bird(object):
 
         status_id = self.driver.current_url.split("/")[-1]
 
-        return {"twitter_post_id":status_id, "twitter_link":self.target+"/status/1708142894895571418", "content":result_string}
+        return {"twitter_post_id":status_id, "twitter_link":self.target+"/status/"+status_id, "content":result_string}
     
     def __checkpinned(driver):
         mainframe = Bird.__waitforelement(driver, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div')
