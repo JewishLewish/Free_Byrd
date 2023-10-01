@@ -40,6 +40,7 @@ class Bird(object):
 
         print("Logged in!")
 
+    def fly_to(self):
         self.driver.get(self.target)
 
     def bio(self):
@@ -65,7 +66,6 @@ class Bird(object):
     
     
     def recent(self):
-        self.driver.get(self.target)
         target = Bird.__checkpinned(self.driver)
         f = self.driver.find_element(By.XPATH, target+'/div/div[1]/div/div')
         f.click()
