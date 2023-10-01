@@ -93,12 +93,7 @@ class Bird(object):
         return {"twitter_post_id":status_id, "twitter_link":self.target+"/status/1708142894895571418", "content":result_string}
     
     def __checkpinned(driver):
-        while True:
-            try:
-                mainframe = driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div')
-                break
-            except:
-                continue
+        mainframe = Bird.__waitforelement(driver, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div')
 
         x = mainframe.find_elements(By.XPATH, '//span[text()]')
         for y in x:
