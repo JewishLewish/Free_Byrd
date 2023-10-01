@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-from account import *
 import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -9,9 +8,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class Bird(object):
     # Define Bird
-    def __init__(self, target:str = ""):
+    def __init__(self, target:str = "", username:str = "", password:str = ""):
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        
         self.target = target
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(options=options)
+        self.username = username
+        self.password = password
     
     def changetarget(self, target:str):
         self.target = target
@@ -26,14 +30,14 @@ class Bird(object):
         #Username input
         time.sleep(random.uniform(0, 1))
         textbox = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input')
-        for letter in username:
+        for letter in self.username:
             textbox.send_keys(letter)
         textbox.send_keys(Keys.ENTER)
 
         time.sleep(1 + random.uniform(0, 1))
         #Password input
         textbox = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
-        for letter in password:
+        for letter in self.password:
             textbox.send_keys(letter)
         textbox.send_keys(Keys.ENTER)
         time.sleep(1 + random.uniform(0, 1))
