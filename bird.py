@@ -3,8 +3,6 @@ from selenium.webdriver.common.by import By
 import time
 import random
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-
 
 class Bird(object):
     # Define Bird
