@@ -14,12 +14,10 @@ class Bird(object):
         self.driver = webdriver.Chrome(options=options)
         self.username = username
         self.password = password
-    
-    def changetarget(self, target:str):
-        self.target = target
         
     #Login System
     def login(self):
+        "login into twitter. This would go through the login process"
 
         print("Logging in...")
         self.driver.get("https://twitter.com/i/flow/login") #Login Page
@@ -43,31 +41,43 @@ class Bird(object):
         print("Logged in!")
 
     def fly_to(self):
+        """place a twitter link of the site to crawl/collect information
+        
+        Example: bird.fly_to("twitter.com/Minecraft")"""
         self.driver.get(self.target)
 
     def bio(self):
+        "collects bio of twitter user"
         bio = Bird.__waitforelement(self.driver, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[3]/div/div/span')
         return bio.text
 
     
     def following(self):
+        "collects twitter account following"
         f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[5]/div[1]/a/span[1]/span').text
         return f
 
     def followers(self):
+        "collects twitter account followers"
         f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[5]/div[2]/a/span[1]/span').text
         return f
     
     def link(self):
+        "collects the link (if they have any)"
         f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[4]/div/a/span').text
         return f
     
     def location(self):
+        "collects location of twitter account"
         f = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div/div[4]/div/span[1]/span/span').text
         return f
     
     
     def recent(self):
+        """collects the most recent post the twitter account made
+        
+        Returns dict -> twitter_post_id, twitter_link, content"""
+
         target = Bird.__checkpinned(self.driver)
         f = self.driver.find_element(By.XPATH, target+'/div/div[1]/div/div')
         f.click()
