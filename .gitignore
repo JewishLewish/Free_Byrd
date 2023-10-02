@@ -7,3 +7,6 @@ __pycache__
 #discord bot - remaining private for now
 bot.py
 database.json
+
+#testing purposes
+test.py
