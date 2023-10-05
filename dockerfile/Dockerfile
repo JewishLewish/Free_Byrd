@@ -11,7 +11,7 @@ RUN         apt-get install -y wget
 RUN         wget -q https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.198-1_amd64.deb
 RUN         apt-get install ./google-chrome-stable_114.0.5735.198-1_amd64.deb -y
 
-RUN         wget https://chromedriver.storage.googleapis.com/114.0.5735.198-1/chromedriver_linux64.zip 
+RUN         wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip 
 RUN         unzip chromedriver_linux64.zip 
 
 USER        container
