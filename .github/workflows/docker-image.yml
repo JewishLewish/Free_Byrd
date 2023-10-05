@@ -12,6 +12,8 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
     permissions:
       contents: read
       packages: write
@@ -50,4 +52,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/jewishlewish/pybird
-          labels: ${{ steps.meta.outputs.labels }}
