@@ -8,7 +8,7 @@ RUN         apt update \
 
 RUN         apt -f install -y
 RUN         apt-get install -y wget
-RUN         wget -q https://dl.google.com/linux/direct/google-chrome-stable_114.0.5735.90_md64.deb
+RUN         wget -q https://dl.google.com/linux/direct/google-chrome-stable_114.0.5735.90_amd64.deb
 RUN         apt-get install ./google-chrome-stable_current_amd64.deb -y
 
 USER        container
