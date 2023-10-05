@@ -20,6 +20,8 @@
 # SOFTWARE.
 #
 
+#Similiar to PY 3.11 dockerfile but installs chromium
+
 FROM		--platform=$TARGETOS/$TARGETARCH docker.io/library/python:3.11-alpine
 
 LABEL		author="JewishLewish" maintainer="lenny@lunes.host"
