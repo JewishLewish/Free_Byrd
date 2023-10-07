@@ -1,9 +1,16 @@
-from bird import * 
+from bird import *
+import asyncio
+from account import *
+
+
+def main():
+
+    with sync_playwright() as p:
+        bird = Bird("https://twitter.com/Minecraft", username, password, browser=p)
+        bird.login()
+        bird.fly_to()
+        print(bird.recent())
+
 
 if __name__ == "__main__":
-    site_url = 'https://twitter.com/Minecraft'
-    bird = Bird(site_url)
-    bird.login()
-
-    while True:
-        True
+    main()
