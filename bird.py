@@ -76,11 +76,10 @@ class Bird(object):
             element_id = mainframe.locator('xpath=.//*',).nth(0)
             return element_id.get_attribute("id")
 
-        id = find_id()
-        print(id)
+
         result_string = ""
 
-        mainframe = self.page.locator('//*[@id="'+id+'"]')
+        mainframe = self.page.locator('//*[@id="'+find_id()+'"]')
 
         x = mainframe.all_inner_texts()
         result_string = x[0]
