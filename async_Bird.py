@@ -64,12 +64,17 @@ class Bird(object):
         ).text_content()
         return location
 
-    async def recent(self):
-        target = await Bird.__checkpinned(self.page)
-        await self.page.locator(target+'/div/div[1]/div/div').click()
+
+    def recent(self):
+
+        #THIS NEEDS TO BE FIXED
+        
+        target = Bird.__checkpinned(self.page)
+        self.page.locator(target+'/div/div[1]/div/div').click()
+        #time.sleep(1)
         #self.page.locator(target+'/div/div[1]/div/div't).click()
 
-        async def find_id():
+        def find_id():
             mainframe = self.page.locator(
                 '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/section/div/div/div[1]/div/div/article/div/div/div[3]/div[1]/div'
             )
@@ -80,15 +85,13 @@ class Bird(object):
 
         result_string = ""
 
-        id = await find_id()
+        mainframe = self.page.locator('//*[@id="'+find_id()+'"]')
 
-        time.sleep(1)
-        x = await self.page.locator('//*[@id="'+str(id)+'"]').all_inner_texts()
-
-        while True:
-            True
-            print(x)
+        x = mainframe.all_inner_texts()
         result_string = x[0]
+
+
+
 
         status_id = self.page.url.split("/")[-1]
 
