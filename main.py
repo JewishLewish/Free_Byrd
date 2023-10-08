@@ -4,13 +4,17 @@ from account import *
 
 
 def main():
+    p = sync_playwright().start()
 
-    with sync_playwright() as p:
-        bird = Bird("https://twitter.com/Minecraft", username, password, browser=p)
-        bird.login()
-        bird.fly_to()
-        print(bird.recent())
+    test(p)
 
+
+
+def test(input):
+    bird = Bird("https://twitter.com/Minecraft", username, password, browser=input)
+    bird.login()
+    bird.fly_to()
+    print(bird.recent())
 
 if __name__ == "__main__":
     main()
