@@ -1,6 +1,6 @@
-FROM        --platform=$TARGETOS/$TARGETARCH python:3.11-slim
+FROM        --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/playwright/python:v1.34.0-jammy
 
-LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
+LABEL       author="Len"
 
 RUN         apt update \
             && apt -y install git gcc g++ ca-certificates dnsutils curl iproute2 ffmpeg procps libnss3 libglib2.0-0 libgconf-2-4 \
@@ -11,7 +11,7 @@ RUN         apt-get install -y wget
 RUN         wget -q https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.198-1_amd64.deb
 RUN         apt-get install ./google-chrome-stable_114.0.5735.198-1_amd64.deb -y
 
-RUN         echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
