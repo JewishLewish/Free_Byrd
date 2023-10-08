@@ -1,4 +1,4 @@
-FROM        --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/playwright/python:v1.34.0-jammy
+FROM        --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/playwright/python:v1.38.0-jammy
 
 LABEL       author="Len"
 
