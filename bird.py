@@ -12,12 +12,12 @@ class Bird(object):
         self.username = username
         self.password = password
         self.browser = browser.chromium.launch(headless=False)
-        self.page = None
+        self.page = self.browser.new_page()
 
     def login(self):
         print("Logging in...")
 
-        self.page = self.browser.new_page()
+        
         self.page.goto("https://twitter.com/i/flow/login")
 
         self.page.locator(
