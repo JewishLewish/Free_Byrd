@@ -64,13 +64,13 @@ class Bird(object):
         return location
 
 
-    def recent(self):
+    async def recent(self):
 
         #THIS NEEDS TO BE FIXED
         
-        target = Bird.__checkpinned(self.page)
-        self.page.locator(target+'/div/div[1]/div/div').click()
-        #time.sleep(1)
+        target = await Bird.__checkpinned(self.page)
+        await (self.page.locator(target+'/div/div[1]/div/div')).click()
+        time.sleep(1)
         #self.page.locator(target+'/div/div[1]/div/div't).click()
 
         def find_id():
@@ -84,10 +84,16 @@ class Bird(object):
 
 
         result_string = ""
+        mainframe = self.page.locator(
+            '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/section/div/div/div[1]/div/div/article/div/div/div[3]/div[1]/div'
+        )
 
-        mainframe = self.page.locator('//*[@id="'+ find_id()+'"]')
 
-        x = mainframe.all_inner_texts()
+        element_id = mainframe.locator('xpath=.//*',).nth(0)
+
+        mainframe = self.page.locator('//*[@id="'+ await (element_id).get_attribute("id")+'"]')
+        x = await (mainframe).all_inner_texts()
+        print(x)
         result_string = x[0]
 
 
