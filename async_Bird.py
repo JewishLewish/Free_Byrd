@@ -10,9 +10,8 @@ class Bird(object):
         self.target = target
         self.username = username
         self.password = password
-        self.loop = asyncio.get_event_loop()
-        self.browser = self.loop.run_until_complete(browser.chromium.launch(headless=False))
-        self.page = self.loop.run_until_complete(self.browser.new_page())
+        self.browser = asyncio.run(browser.chromium.launch(headless=False))
+        self.page = asyncio.run(self.browser.new_page())
 
     async def login(self):
         print("Logging in...")
@@ -80,12 +79,13 @@ class Bird(object):
             )
 
             element_id = mainframe.locator('xpath=.//*',).nth(0)
+
             return element_id.get_attribute("id")
 
 
         result_string = ""
 
-        mainframe = self.page.locator('//*[@id="'+find_id()+'"]')
+        mainframe = self.page.locator('//*[@id="'+ find_id()+'"]')
 
         x = mainframe.all_inner_texts()
         result_string = x[0]
