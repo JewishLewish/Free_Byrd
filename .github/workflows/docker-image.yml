@@ -52,3 +52,4 @@ jobs:
           platforms: linux/amd64
           tags: |
             ghcr.io/jewishlewish/pybird
+          build-args: -it --rm --ipc=host
