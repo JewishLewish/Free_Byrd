@@ -108,12 +108,22 @@ class Bird(object):
         }
 
     async def __checkpinned(page):
-        main_frame = page.locator('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[//*[@id="id__8a01xjyigrk"]/span1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div')
+        x = False
+        try:
+            main_frame = page.locator('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div/div/div[1]/div/div/div/div/div[2]/div/div')
+            return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[2]/div/div/article/div'
+        except:
+            return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div'
         
-        x = await main_frame.locator('//span').all()
-        for y in x:
-            if "Pinn" in y.text_content():
-                return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[2]/div/div/article/div'
+        #x = await (main_frame.locator('//span')).all()
+        #for y in x:
+        #    print(y.text_content())
+        #    if "Pinn" in y.text_content():
+       #         return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[2]/div/div/article/div'
 
+        y = await (main_frame).all_inner_texts()
+        if "Pinn" in y:
+            print("FOUND IT!")
+    
         return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div'
 
