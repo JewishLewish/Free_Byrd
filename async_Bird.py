@@ -17,6 +17,7 @@ class Bird(object):
         print("Logging in...")
 
         await self.page.goto("https://twitter.com/i/flow/login")
+        #await self.__wait()
 
         await self.page.locator(
             '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input'
@@ -126,4 +127,17 @@ class Bird(object):
             print("FOUND IT!")
     
         return '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/section/div/div/div[1]/div/div/article/div'
-
+    
+    async def __wait(self):
+        retries = 1
+        max_retries = 10
+        while retries <= max_retries:
+            try:
+                await self.page.goto(self.target)     
+                return  
+            except Exception:
+                print(Exception)
+                time.sleep(2)
+                retries += 1
+                continue
+            break
